@@ -40,25 +40,34 @@
 /// <returns>A linked list representing the sum of the two numbers</returns>
 public class Solution {
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode dummyHead = new ListNode(0);
-        ListNode p = l1, q = l2, current = dummyHead;
+        // Khởi tạo dummy và current cùng lúc
+        // dummy là node giả, current là con trỏ di chuyển
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+        
+        ListNode current1 = l1;
+        ListNode current2 = l2;
         int carry = 0;
 
-        while (p != null || q != null) {
-            int x = (p != null) ? p.val : 0;
-            int y = (q != null) ? q.val : 0;
-            int sum = carry + x + y;
+        while (current1 != null || current2 != null) {
+            int digit1 = (current1 != null) ? current1.val : 0;
+            int digit2 = (current2 != null) ? current2.val : 0;
+            
+            int sum = carry + digit1 + digit2;
             carry = sum / 10;
-            current.next = new ListNode(sum % 10);
+            int resultDigit = sum % 10;
+            
+            current.next = new ListNode(resultDigit);
             current = current.next;
-            if (p != null) p = p.next;
-            if (q != null) q = q.next;
+            
+            current1 = (current1 != null) ? current1.next : null;
+            current2 = (current2 != null) ? current2.next : null;
         }
 
         if (carry > 0) {
             current.next = new ListNode(carry);
         }
 
-        return dummyHead.next;
+        return dummy.next;
     }
 }
